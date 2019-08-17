@@ -1,0 +1,18 @@
+{
+    "version": 2,
+    "name": "now-builders-php-bref-nette",
+    "scope": "juicyfx",
+    "regions": ["bru1"],
+    "public": true,
+    "builds": [
+      { "src": "www/index.php", "use": "@juicyfx/php-bref@canary"}
+    ],
+    "routes": [
+      { "src": "/css/(.*)", "dest": "/www/css/$1" },
+      { "src": "/js/(.*)", "dest": "/www/js/$1" },
+      { "src": "/(.*)", "dest": "/www/index.php" }
+    ],
+    "env": {
+      "REV": "1"
+    }
+}

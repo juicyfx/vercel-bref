@@ -1,0 +1,13 @@
+{
+    "version": 2,
+    "name": "now-builders-php-bref",
+    "scope": "juicyfx",
+    "regions": ["bru1"],
+    "public": true,
+    "builds": [
+      { "src": "*.php", "use": "@juicyfx/php-bref@canary"}
+    ],
+    "env": {
+      "REV": "7"
+    }
+}

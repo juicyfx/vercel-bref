@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# List directories
+# ls -la
+
+# Update ENV
+export LD_LIBRARY_PATH="/var/task/native/bref/lib64:/var/task/native/bref/lib:$LD_LIBRARY_PATH"
+export PATH="/var/task/native/bin:$PATH"
+export LAMBDA_TASK_ROOT="/var/task/user"
+
+# Run bref's bootstrap
+./native/bootstrap
