@@ -1,3 +1,5 @@
+.PHONY: prepare sync clean build publish publish-canary publish-experimental
+
 prepare:
 	git clone git@github.com:brefphp/bref.git build/bref
 
@@ -6,7 +8,7 @@ sync:
 	git -C build/bref pull
 
 clean:
-	rm -rf native/**
+	rm -rf build/bref/runtime/export/tmp/**
 
 build:
 	# Just build from Docker hub
@@ -18,14 +20,20 @@ build:
 	# Ensure folder
 	mkdir -p native
 
+	# Cleanup folder
+	rm -rf native/**
+
 	# Extract binaries
 	tar zxvf build/bref/runtime/export/php-73-fpm.zip -C native
 
 	# Replace PHP paths
 	#sed -i '' -e "s/\/opt\/bin\/php/\/var\/task\/native\/bref\/bin\/php/g" ./native/bootstrap
 
+	# Extra cleanup(s)
+	rm -rf native/bref/lib/php/test
+
 	# Use our tuned bootstrap
-	cp bootstrap ./native/bootstrap
+	cp lib/bootstrap ./native/bootstrap
 
 publish:
 	rm -rf ./dist

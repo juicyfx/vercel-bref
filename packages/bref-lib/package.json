@@ -1,6 +1,6 @@
 {
   "name": "@now-bref/lib",
-  "version": "0.0.1-canary.0",
+  "version": "0.0.1-canary.2",
   "license": "MIT",
   "main": "./dist/index.js",
   "homepage": "https://github.com/juicyfx/now-php",
@@ -19,7 +19,20 @@
     "dist",
     "native"
   ],
+  "jest": {
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/spec/**/*.[jt]s?(x)"
+    ],
+    "rootDir": "."
+  },
   "dependencies": {
     "@now/build-utils": "^0.9.4"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.1.1",
+    "@types/node": "^10.0.0",
+    "jest": "^24.8.0",
+    "typescript": "^3.5.3"
   }
 }

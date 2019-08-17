@@ -1,10 +1,7 @@
-const glob = require('@now/build-utils/fs/glob.js');
+import { glob } from '@now/build-utils';
+import path from "path";
 
-async function getFiles() {
+export async function getBrefFiles(): Promise<Files> {
   // Lookup for all files in native folder
-  return await glob('native/**', __dirname);
+  return await glob('native/**', { cwd: path.join(__dirname, "..") });
 }
-
-module.exports = {
-  getFiles,
-};
