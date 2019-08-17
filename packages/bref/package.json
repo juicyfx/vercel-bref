@@ -1,7 +1,7 @@
 {
   "name": "now-bref",
   "description": "Deploy bref to ZEIT Now",
-  "version": "0.0.1-canary.0",
+  "version": "0.0.1-canary.4",
   "license": "MIT",
   "main": "./dist/index.js",
   "homepage": "https://github.com/juicyfx/now-bref",
@@ -28,7 +28,7 @@
     "rootDir": "."
   },
   "dependencies": {
-    "@now-php/lib-73": "canary"
+    "@now-bref/lib": "experimental"
   },
   "devDependencies": {
     "@now/build-utils": "^0.9.4",
