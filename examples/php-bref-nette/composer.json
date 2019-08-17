@@ -1,5 +1,4 @@
 {
-
 	"require": {
 		"php": ">=7.1",
 		"nette/application": "^3.0",
