@@ -26,6 +26,9 @@ build:
 	# Extract binaries
 	tar zxvf build/bref/runtime/export/php-73-fpm.zip -C native
 
+	# Download composer
+	curl -sS https://getcomposer.org/installer | php -- --install-dir=native/bin --filename=composer
+
 	# Replace PHP paths
 	#sed -i '' -e "s/\/opt\/bin\/php/\/var\/task\/native\/bref\/bin\/php/g" ./native/bootstrap
 
