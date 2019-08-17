@@ -7,7 +7,7 @@ import {
   FileFsRef
 } from '@now/build-utils';
 import { getBrefFiles } from '@now-bref/lib';
-import { getIncludedFiles } from './utils';
+import { getIncludedFiles, getComposerFiles } from './utils';
 
 // ###########################
 // EXPORTS
@@ -22,7 +22,17 @@ export async function build({
 }: BuildOptions) {
 
   // Collect included files
-  const includedFiles = await getIncludedFiles({ files, entrypoint, workPath, config, meta });
+  let includedFiles = await getIncludedFiles({ files, entrypoint, workPath, config, meta });
+
+  // Try to install composer deps only on lambda,
+  // not in the local now dev mode.
+  if (!meta.isDev) {
+    // Composer is called only if composer.json is provided,
+    // or config.composer is TRUE
+    if (includedFiles['composer.json'] || config.compose === true) {
+      includedFiles = { ...includedFiles, ...await getComposerFiles(workPath) };
+    }
+  }
 
   // Move all user files to LAMBDA_ROOT/user folder.
   const userFiles = rename(includedFiles, name => path.join('user', name));
