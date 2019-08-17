@@ -9,9 +9,9 @@ Deploy <a href="https://bref.sh">bref</a> to ZEIT Now
 </p>
 
 <p align=center>
-	<a href="https://www.npmjs.com/package/now-php"><img alt="npm" src="https://img.shields.io/npm/dt/now-bref?style=flat-square"></a>
-	<a href="https://www.npmjs.com/package/now-php"><img alt="npm (tag)" src="https://img.shields.io/npm/v/now-bref/latest?style=flat-square"></a>
-	<a href="https://www.npmjs.com/package/now-php"><img alt="npm (tag)" src="https://img.shields.io/npm/v/now-bref/canary?style=flat-square"></a>
+	<a href="https://www.npmjs.com/package/now-bref"><img alt="npm" src="https://img.shields.io/npm/dt/now-bref?style=flat-square"></a>
+	<a href="https://www.npmjs.com/package/now-bref"><img alt="npm (tag)" src="https://img.shields.io/npm/v/now-bref/latest?style=flat-square"></a>
+	<a href="https://www.npmjs.com/package/now-bref"><img alt="npm (tag)" src="https://img.shields.io/npm/v/now-bref/canary?style=flat-square"></a>
 </p>
 
 ## 🐣 Versions
