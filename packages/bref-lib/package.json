@@ -1,6 +1,6 @@
 {
   "name": "@now-bref/lib",
-  "version": "0.0.1-canary.5",
+  "version": "0.0.1-canary.9",
   "license": "MIT",
   "main": "./dist/index.js",
   "homepage": "https://github.com/juicyfx/now-php",

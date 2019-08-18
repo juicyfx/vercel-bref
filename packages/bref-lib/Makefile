@@ -35,7 +35,8 @@ build:
 	# Extra cleanup(s)
 	rm -rf native/bref/lib/php/test
 	rm -rf native/bref/bin
-	rm -rf native/bref/lib/{cmake,php,pkgconfig}
+	rm -rf native/bref/lib/{cmake,pkgconfig}
+	find native/bref/lib/php -not -path "native/bref/lib/php/extensions*" -not -path "native/bref/lib/php" -exec rm -rf {} +
 	rm -rf native/bref/php
 	rm -rf native/bref/sbin
 	rm -rf native/bref/share
