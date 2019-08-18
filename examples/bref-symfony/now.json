@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "name": "now-bref-symfony",
+  "scope": "juicyfx",
+  "regions": ["all"],
+  "public": true,
+  "builds": [
+    { "src": "public/index.php", "use": "now-bref@experimental"}
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "/public/index.php" }
+  ],
+  "build": {
+    "env": {
+      "NOW_PHP_DEBUG": "1"
+    }
+  }
+}

@@ -1,0 +1,58 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'Bref Symfony demo'
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+    Function:
+        Environment:
+            Variables:
+                APP_ENV: prod
+        # Those tags are specific to Bref, you can remove them from your application
+        Tags:
+            Bref: Bref
+            app: Bref Symfony demo
+
+Resources:
+    Website:
+        # See https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+        Type: AWS::Serverless::Function
+        Properties:
+            FunctionName: 'bref-demo-symfony-website'
+            Description: 'Bref Symfony demo website'
+            CodeUri: .
+            Handler: public/index.php
+            Timeout: 30 # in seconds (API Gateway has a timeout of 30 seconds)
+            MemorySize: 1024
+            Runtime: provided
+            Layers:
+                - 'arn:aws:lambda:us-east-1:209497400698:layer:php-73-fpm:7'
+            Events:
+                HttpRoot:
+                    Type: Api
+                    Properties:
+                        Path: /
+                        Method: ANY
+                HttpSubPaths:
+                    Type: Api
+                    Properties:
+                        Path: /{proxy+}
+                        Method: ANY
+
+    Console:
+        Type: AWS::Serverless::Function
+        Properties:
+            FunctionName: 'bref-demo-symfony-console'
+            Description: 'Bref Symfony demo console'
+            CodeUri: .
+            Handler: bin/console
+            Timeout: 120 # in seconds
+            Runtime: provided
+            Layers:
+                - 'arn:aws:lambda:us-east-1:209497400698:layer:php-73:7' # PHP
+                - 'arn:aws:lambda:us-east-1:209497400698:layer:console:7' # The "console" layer
+
+Outputs:
+    DemoApi:
+        Description: "API Gateway endpoint URL for Prod stage"
+        Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
