@@ -3,11 +3,12 @@ import { spawn } from 'child_process';
 import path from "path";
 
 const PHP_PKG = path.dirname(require.resolve('@now-bref/lib/package.json'));
-const PHP_BIN_DIR = path.join(PHP_PKG, "native/bref/bin");
-const PHP_MODULES_DIR = path.join(PHP_BIN_DIR, "native/bref/lib/php/extensions/no-debug-zts-20180731");
+const PHP_BIN_DIR = path.join(PHP_PKG, "native/bin");
+const PHP_BIN = path.join(PHP_BIN_DIR, "php");
+const PHP_MODULES_DIR = path.join(PHP_PKG, "native/bref/lib/php/extensions/no-debug-zts-20180731");
 const PHP_LIB_DIR = path.join(PHP_PKG, "native/bref/lib");
 const PHP_LIB64_DIR = path.join(PHP_PKG, "native/bref/lib64");
-const COMPOSER_BIN = path.join(PHP_PKG, "native/bin/composer");
+const COMPOSER_BIN = path.join(PHP_BIN_DIR, "composer");
 
 export async function getIncludedFiles({ files, entrypoint, workPath, config, meta }: BuildOptions): Promise<Files> {
   // Download all files to workPath
