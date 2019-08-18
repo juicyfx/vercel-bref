@@ -27,18 +27,21 @@ try {
 
 while (true) {
     $lambdaRuntime->processNextEvent(function ($event) use ($phpFpm): array {
-        if (isset($event['body'])) {
-            $body = @json_decode($event['body'], true);
+        // We need to take event.body because at ZEIT Now structure
+        $body = [];
 
-            if (isset($body['method']) && ! isset($event['httpMethod'])) {
-                $event['httpMethod'] = $body['method'];
-            }
+        if (isset($event['Action'])) {
+            // event { method, path, headers, encoding, body }
+            $body = json_decode($event['body'], true);
+            $body['httpMethod'] = $body['method'];
+            $body['isBase64Encoded'] = ($body['encoding'] ?? null) === 'base64';
+        } else {
+            // event { httpMethod, path, headers, body }
+            $body = json_decode($event['body'], true);
         }
 
-        $response = $phpFpm->proxy($event);
-
-        $multiHeader = array_key_exists('multiValueHeaders', $event);
-        return $response->toApiGatewayFormat($multiHeader);
+        $response = $phpFpm->proxy($body);
+        return $response->toApiGatewayFormat();
     });
 
     try {
