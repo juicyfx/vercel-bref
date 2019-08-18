@@ -43,6 +43,9 @@ build:
 	# Use our tuned bootstrap
 	cp lib/bootstrap ./native/bootstrap
 
+	# Use our tuned PHP ini
+	cp lib/now.ini ./native/bref/etc/php/conf.d/now.ini
+
 publish:
 	rm -rf ./dist
 	npm publish --access public --tag latest
