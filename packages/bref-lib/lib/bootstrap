@@ -1,4 +1,4 @@
-#!/var/task/native/bref/bin/php
+#!/var/task/native/bin/php
 <?php declare(strict_types=1);
 
 use Bref\Runtime\LambdaRuntime;

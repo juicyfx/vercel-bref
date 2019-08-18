@@ -34,6 +34,11 @@ build:
 
 	# Extra cleanup(s)
 	rm -rf native/bref/lib/php/test
+	rm -rf native/bref/bin
+	rm -rf native/bref/lib/{cmake,php,pkgconfig}
+	rm -rf native/bref/php
+	rm -rf native/bref/sbin
+	rm -rf native/bref/share
 
 	# Use our tuned bootstrap
 	cp lib/bootstrap ./native/bootstrap
@@ -41,6 +46,10 @@ build:
 publish:
 	rm -rf ./dist
 	npm publish --access public --tag latest
+
+publish-dry:
+	rm -rf ./dist
+	npm publish --dry
 
 publish-canary:
 	rm -rf ./dist
