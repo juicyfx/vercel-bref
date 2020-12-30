@@ -1,13 +1,13 @@
 {
-  "name": "now-bref",
-  "description": "Deploy bref to ZEIT Now",
-  "version": "0.0.1-canary.12",
+  "name": "vercel-bref",
+  "description": "Bref PHP Runtime for Vercel",
+  "version": "0.0.1",
   "license": "MIT",
   "main": "./dist/index.js",
-  "homepage": "https://github.com/juicyfx/now-bref",
+  "homepage": "https://github.com/juicyfx/vercel-bref",
   "repository": {
     "type": "git",
-    "url": "https://github.com/juicyfx/now-bref.git"
+    "url": "https://github.com/juicyfx/vercel-bref.git"
   },
   "scripts": {
     "watch": "tsc --watch",
