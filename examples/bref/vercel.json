@@ -1,9 +1,6 @@
 {
   "version": 2,
-  "name": "now-bref",
-  "scope": "juicyfx",
-  "regions": ["all"],
-  "public": true,
+  "name": "bref",
   "builds": [
     { "src": "*.php", "use": "now-bref@experimental"}
   ],

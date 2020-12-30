@@ -1,9 +1,6 @@
 {
   "version": 2,
-  "name": "now-bref-nette",
-  "scope": "juicyfx",
-  "regions": ["all"],
-  "public": true,
+  "name": "bref-nette",
   "builds": [
     { "src": "www/index.php", "use": "now-bref@experimental"}
   ],

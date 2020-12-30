@@ -1,9 +1,6 @@
 {
   "version": 2,
-  "name": "now-bref-symfony",
-  "scope": "juicyfx",
-  "regions": ["all"],
-  "public": true,
+  "name": "bref-symfony",
   "builds": [
     { "src": "public/index.php", "use": "now-bref@experimental"}
   ],
