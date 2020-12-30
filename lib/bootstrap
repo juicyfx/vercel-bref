@@ -9,4 +9,4 @@ export PATH="/var/task/native/bin:$PATH"
 export LAMBDA_TASK_ROOT="/var/task/user"
 
 # Run bref's bootstrap
-./native/bootstrap
+./native/bref

@@ -45,7 +45,7 @@ build:
 	cp lib/bootstrap ./native/bootstrap
 
 	# Use our tuned PHP ini
-	cp lib/now.ini ./native/bref/etc/php/conf.d/now.ini
+	cp lib/vercel.ini ./native/bref/etc/php/conf.d/vercel.ini
 
 publish:
 	rm -rf ./dist
@@ -64,3 +64,6 @@ publish-experimental:
 	rm -rf ./dist
 	npm version --no-git-tag-version prerelease
 	npm publish --access public --tag experimental
+
+test:
+	yarn test

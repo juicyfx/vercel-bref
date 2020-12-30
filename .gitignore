@@ -1,2 +1,9 @@
+# Bref
+/build/bref
+/native
+
+# TS
+/dist
+
 # Node
 /node_modules
