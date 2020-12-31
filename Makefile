@@ -1,4 +1,7 @@
-.PHONY: prepare sync clean clean-export build publish publish-canary publish-experimental test lambda
+.PHONY: install prepare sync clean clean-export build publish publish-canary publish-experimental test lambda
+
+install:
+	npm ci
 
 prepare:
 	git clone git@github.com:brefphp/bref.git build/bref
