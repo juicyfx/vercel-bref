@@ -1,53 +1,27 @@
-import { BuildOptions, download, glob } from "@now/build-utils/dist";
-import { spawn } from 'child_process';
+import { glob, spawnAsync } from "@vercel/build-utils";
+import { SpawnOptions, spawnSync } from 'child_process';
 import path from "path";
 
-const PHP_PKG = path.dirname(require.resolve('@now-bref/lib/package.json'));
-const PHP_BIN_DIR = path.join(PHP_PKG, "native/bin");
-const PHP_BIN = path.join(PHP_BIN_DIR, "php");
-const PHP_MODULES_DIR = path.join(PHP_PKG, "native/bref/lib/php/extensions/no-debug-zts-20180731");
-const PHP_LIB_DIR = path.join(PHP_PKG, "native/bref/lib");
-const PHP_LIB64_DIR = path.join(PHP_PKG, "native/bref/lib64");
-const COMPOSER_BIN = path.join(PHP_BIN_DIR, "composer");
+const BREF_PKG = path.dirname(require.resolve('vercel-bref/package.json'));
+const NATIVE_ZIP = path.join(BREF_PKG, 'native.zip');
+const PHP_BIN_DIR = path.join(BREF_PKG, "native/bref/bin");
+const PHP_MODULES_DIR = path.join(BREF_PKG, "native/bref/lib/php/extensions/no-debug-non-zts-20200930");
+const PHP_LIB_DIR = path.join(BREF_PKG, "native/bref/lib");
+const PHP_LIB64_DIR = path.join(BREF_PKG, "native/bref/lib64");
+const COMPOSER_BIN = path.join(BREF_PKG, "native/bin/composer");
 
-export async function getIncludedFiles({ files, entrypoint, workPath, config, meta }: BuildOptions): Promise<Files> {
-  // Download all files to workPath
-  const downloadedFiles = await download(files, workPath, meta);
+export async function getBrefFiles(): Promise<RuntimeFiles> {
+  // Unzip brefphp files
+  await spawnSync('unzip', [NATIVE_ZIP], { cwd: BREF_PKG })
 
-  let includedFiles = {};
-  if (config && config.includeFiles) {
-    // Find files for each glob
-    for (const pattern of config.includeFiles) {
-      const matchedFiles = await glob(pattern, workPath);
-      Object.assign(includedFiles, matchedFiles);
-    }
-    // explicit and always include the entrypoint
-    Object.assign(includedFiles, {
-      [entrypoint]: files[entrypoint],
-    });
-  } else {
-    // Backwards compatibility
-    includedFiles = downloadedFiles;
-  }
-
-  return includedFiles;
+  // Lookup for all files in native folder
+  return await glob('native/**', { cwd: BREF_PKG });
 }
 
+export async function runComposerInstall(workPath: string): Promise<void> {
+  console.log('🐘 Installing Composer dependencies [START]');
 
-export async function getComposerFiles(workPath: string): Promise<Files> {
-  console.log('🐘 Installing Composer deps.');
-
-  // Install composer dependencies
-  await runComposerInstall(workPath);
-
-  console.log('🐘 Installing Composer deps OK.');
-
-  return await glob('vendor/**', workPath);
-}
-
-async function runComposerInstall(cwd: string) {
-  // @todo think about allow to pass custom commands here
-  await runPhp(cwd,
+  await runPhp(
     [
       COMPOSER_BIN,
       'install',
@@ -58,51 +32,37 @@ async function runComposerInstall(cwd: string) {
       '--ignore-platform-reqs',
       '--no-progress'
     ],
-    { stdio: 'inherit' }
+    {
+      stdio: 'inherit',
+      cwd: workPath
+    }
   );
+
+  console.log('🐘 Installing Composer dependencies [DONE]');
 }
 
-async function runPhp(cwd: string, args: any[], opts = {}) {
+async function runPhp(args: string[], opts: SpawnOptions = {}) {
   try {
+    const options = {
+      ...opts,
+      env: {
+        ...process.env,
+        ...(opts.env || {}),
+        COMPOSER_HOME: '/tmp',
+        PATH: `${PHP_BIN_DIR}:${process.env.PATH}`,
+        PHP_INI_EXTENSION_DIR: PHP_MODULES_DIR,
+        PHP_INI_SCAN_DIR: `:${path.resolve(__dirname, '../conf')}`,
+        LD_LIBRARY_PATH: `${PHP_LIB_DIR}:${PHP_LIB64_DIR}:/usr/lib64:/lib64:${process.env.LD_LIBRARY_PATH}`
+      }
+    };
+
     await spawnAsync(
       'php',
-      [`-dextension_dir=${PHP_MODULES_DIR}`, ...args],
-      cwd,
-      {
-        ...opts,
-        ...{
-          env: {
-            ...process.env,
-            ...{
-              COMPOSER_HOME: '/tmp',
-              PATH: `${PHP_BIN_DIR}:${process.env.PATH}`,
-              LD_LIBRARY_PATH: `${PHP_LIB_DIR}:${PHP_LIB64_DIR}:/usr/lib64:/lib64:${process.env.LD_LIBRARY_PATH}`
-            }
-          }
-        }
-      }
+      args,
+      options
     );
   } catch (e) {
     console.error(e);
     process.exit(1);
   }
-}
-
-function spawnAsync(command: string, args: any[], cwd?: string, opts = {}) {
-  return new Promise((resolve, reject) => {
-    const child = spawn(command, args, {
-      stdio: "ignore",
-      cwd,
-      ...opts
-    });
-
-    child.on('error', reject);
-    child.on('exit', (code, signal) => {
-      if (code === 0) {
-        resolve();
-      } else {
-        reject(new Error(`Exited with ${code || signal}`));
-      }
-    });
-  })
 }
