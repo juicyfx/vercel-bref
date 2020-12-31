@@ -57,7 +57,7 @@ build:
 	cp lib/vercel.ini ./native/bref/etc/php/conf.d/vercel.ini
 
 	# Remove previous native build pack
-	rm native.zip
+	rm native.zip || true
 
 	# Create native build pack
 	zip --symlinks -r native.zip native
