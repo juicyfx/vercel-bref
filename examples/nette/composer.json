@@ -1,6 +1,6 @@
 {
 	"require": {
-		"php": ">=7.1",
+		"php": ">=7.4",
 		"nette/application": "^3.0",
 		"nette/bootstrap": "^3.0",
 		"nette/caching": "^3.0",
@@ -17,7 +17,7 @@
 		"latte/latte": "^2.5",
 		"tracy/tracy": "^2.6",
 		"dg/adminer-custom": "^1.8",
-        "bref/bref": "^0.4.1"
+		"bref/bref": "^1.0.0"
 	},
 	"autoload": {
 		"classmap": ["app/Bootstrap.php"]
