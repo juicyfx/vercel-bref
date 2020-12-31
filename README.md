@@ -1,13 +1,13 @@
-<h1 align=center>Bref Serverless Runtime for <a href="https://vercel.com">Vercel</h1>
+<h1 align=center>Bref Serverless Runtime for <a href="https://vercel.com">Vercel</a></h1>
 
 <p align=center>
-  The power of <a href="https://github.com/brefphp/bref">Bref Serverless PHP</a> for Vercel platform.
+  The power of <a href="https://github.com/brefphp/bref">Bref Serverless PHP</a> deploy easily to Vercel platform.
 </p>
 
 <p align=center>
   <a href="https://www.npmjs.com/package/vercel-bref"><img src="https://badgen.net/npm/v/vercel-bref"></a>
   <a href="https://www.npmjs.com/package/vercel-bref"><img src="https://badgen.net/npm/dt/vercel-bref"></a>
-  <a href="https://www.npmjs.com/package/vercel-bref"><img src="https://badgen.net/github/status/juicyfx/vercel-bref/master"></a>
+  <a href="https://www.npmjs.com/package/vercel-bref"><img src="https://badgen.net/github/checks/juicyfx/vercel-bref/"></a>
 </p>
 
 <p align=center>
