@@ -2,7 +2,9 @@
   "version": 2,
   "name": "bref-nette",
   "builds": [
-    { "src": "www/index.php", "use": "vercel-bref@experimental"}
+    { "src": "www/index.php", "use": "vercel-bref@experimental"},
+    { "src": "www/css/**", "use": "@vercel/static"},
+    { "src": "www/js/**", "use": "@vercel/static"}
   ],
   "routes": [
     { "src": "/css/(.*)", "dest": "/www/css/$1" },
