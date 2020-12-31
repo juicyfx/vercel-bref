@@ -4,7 +4,7 @@ install:
 	npm ci
 
 prepare:
-	git clone git@github.com:brefphp/bref.git build/bref
+	git clone https://github.com/brefphp/bref.git build/bref
 
 sync:
 	git -C build/bref reset --hard HEAD
