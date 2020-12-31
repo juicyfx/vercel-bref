@@ -1,16 +1,20 @@
-const utils = require('./../../dist/utils');
+const {glob} = require("@vercel/build-utils");
+const path = require("path");
+
+const BREF_PKG = path.dirname(require.resolve('vercel-bref/package.json'));
 
 test('lookup php files', async () => {
-    const files = await utils.getBrefFiles();
+  const files = await glob('native/**', {cwd: BREF_PKG});
 
-    expect(Object.keys(files).length).toEqual(82);
-    expect(typeof files).toEqual('object');
+  expect(Object.keys(files).length).toEqual(81);
+  expect(typeof files).toEqual('object');
 });
 
 test('have all php files', async () => {
-    const files = await utils.getBrefFiles();
-    expect(files).toHaveProperty('native/bootstrap');
-    expect(files).toHaveProperty('native/bin/composer');
-    expect(files).toHaveProperty('native/bin/php');
-    expect(files).toHaveProperty('native/bin/php-fpm');
+  const files = await glob('native/**', {cwd: BREF_PKG});
+
+  expect(files).toHaveProperty('native/brefphp');
+  expect(files).toHaveProperty('native/bin/composer');
+  expect(files).toHaveProperty('native/bin/php');
+  expect(files).toHaveProperty('native/bin/php-fpm');
 });

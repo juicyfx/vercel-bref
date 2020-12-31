@@ -1,5 +1,13 @@
 .PHONY: install prepare sync clean clean-export build publish publish-canary publish-experimental test lambda
 
+OS_NAME := $(shell uname -s | tr A-Z a-z)
+
+ifeq ($(OS_NAME),darwin)
+	SED_ARGS := "-i '' -e"
+else
+	SED_ARGS := "-i"
+endif
+
 install:
 	npm ci
 
@@ -18,7 +26,7 @@ clean-export:
 
 build:
 	# Just build from Docker hub
-	sed -i '' -e 's/export\/php%.zip: docker-images/export\/php%.zip:/g' build/bref/runtime/Makefile
+	sed ${SED_ARGS} 's/export\/php%.zip: docker-images/export\/php%.zip:/g' build/bref/runtime/Makefile
 
 	# Create binaries
 	cd build/bref/runtime && make export/php-80-fpm.zip
@@ -30,10 +38,11 @@ build:
 	rm -rf native/**
 
 	# Extract binaries
-	tar zxvf build/bref/runtime/export/php-80-fpm.zip -C native
+	unzip build/bref/runtime/export/php-80-fpm.zip -d native
 
 	# Download composer
-	curl -sS https://getcomposer.org/installer | php -- --install-dir=native/bin --filename=composer
+	curl -o native/bin/composer https://getcomposer.org/composer-stable.phar
+	chmod +x native/bin/composer
 
 	# Replace PHP paths
 	#sed -i '' -e "s/\/opt\/bin\/php/\/var\/task\/native\/bref\/bin\/php/g" ./native/bootstrap
@@ -47,7 +56,10 @@ build:
 	# Use our tuned PHP ini
 	cp lib/vercel.ini ./native/bref/etc/php/conf.d/vercel.ini
 
-	# Create zip
+	# Remove previous native build pack
+	rm native.zip
+
+	# Create native build pack
 	zip --symlinks -r native.zip native
 
 publish:

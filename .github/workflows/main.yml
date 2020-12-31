@@ -4,6 +4,7 @@ on: [push, pull_request]
 
 jobs:
   run:
+    name: "Main"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -14,14 +15,14 @@ jobs:
         with:
           node-version: '12.x'
 
-      - name: Dependencies
-        run: make install
-
       - name: Install brefphp
         run: make prepare
 
       - name: Build brefphp
         run: make build
+
+      - name: Install dependencies
+        run: make install
 
       - name: Tests
         run: make test
