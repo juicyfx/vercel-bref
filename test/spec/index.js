@@ -6,7 +6,7 @@ const BREF_PKG = path.dirname(require.resolve('vercel-bref/package.json'));
 test('lookup php files', async () => {
   const files = await glob('native/**', {cwd: BREF_PKG});
 
-  expect(Object.keys(files).length).toEqual(81);
+  expect(Object.keys(files).length).toEqual(82);
   expect(typeof files).toEqual('object');
 });
 
