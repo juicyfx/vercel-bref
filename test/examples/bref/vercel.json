@@ -2,7 +2,7 @@
   "version": 2,
   "name": "bref",
   "builds": [
-    { "src": "*.php", "use": "vercel-bref@0.0.11"}
+    { "src": "*.php", "use": "vercel-bref@0.1.2"}
   ],
   "build": {
     "env": {
