@@ -39,7 +39,7 @@
     "rootDir": "."
   },
   "dependencies": {
-    "@vercel/build-utils": "^2.13.0"
+    "@vercel/build-utils": "^6.3.2"
   },
   "devDependencies": {
     "@types/glob": "^8.0.0",
